@@ -6,6 +6,7 @@ def clean_up_data
   # Clean up data between tests to prevent cross talk
   User.destroy_all
   Skill.destroy_all
+  SkillUser.destroy_all
 end
 
 def assert(boolean, message)
