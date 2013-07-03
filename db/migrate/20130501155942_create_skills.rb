@@ -6,5 +6,6 @@ class CreateSkills < ActiveRecord::Migration
 
       t.timestamps
     end
+
   end
 end
