@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_many  :skill_users
+  has_many  :skill_users, dependent: :destroy
   has_many  :skills, through: :skill_users
 
 
@@ -8,20 +8,15 @@ class User < ActiveRecord::Base
   # set_proficiency_for
   # user_with_proficiency
   def proficiency_for(skill)
-    skill_user = SkillUser.where(skill_id:  skill.id, user_id:  self.id)
-    skill_user.pluck(:proficiency).first
+    skill_user = self.skill_users.where(skill_id: skill.id).first
+    skill_user.proficiency
   end
 
 
   def set_proficiency_for(skill, proficiency)
-    skill_user = SkillUser.where(skill_id:  skill.id, user_id:  self.id)
-    skill_user.each do |su|
-      su.proficiency = proficiency
-      su.save
-    end
+    skill_user = self.skill_users.where(skill_id: skill.id).first
+    skill_user.proficiency = proficiency
+    skill_user.save  
   end
-
-  
-
 
 end

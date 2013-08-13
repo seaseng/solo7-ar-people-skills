@@ -122,5 +122,10 @@ task "console" do
   exec "irb -r./config/environment"
 end
 
+desc 'Stop Drop and Load'
+task "reset" do
+  exec "rake db:drop && rake db:create && rake db:migrate && rake db:seed"
+end
+
 
 task :default  => :console
